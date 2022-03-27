@@ -1,0 +1,54 @@
+#!/bin/bash
+while :
+do
+	#Lights
+	flg=$(cat spkL)
+	if [ "$flg" == "11" ] || [ "$flg" == "10" ]
+	then
+		cd /home/gui-bot/Desktop/Scripts/GUI/Wheatly/
+		flg1=$(cat flgL)
+		cd Audio
+		if [ "$flg1" == "1" ] && [ "$flg" == "11" ]
+		then
+			espeak "they are alredy on"
+		elif [ "$flg1" == "0" ] && [ "$flg" == "10" ]
+		then
+			espeak "they are alredy off"
+		else
+			aplay 5.wav
+		fi
+		cd /home/gui-bot/Desktop/Scripts/GUI/Wheatly/
+		echo 0 > spkL
+	fi
+	#Start
+	flg=$(cat flgS)
+	if [ "$flg" == "1" ]
+	then
+		cd /home/gui-bot/Desktop/Scripts/GUI/Wheatly/
+		cd Audio
+		aplay 11.wav
+		cd /home/gui-bot/Desktop/Scripts/GUI/Wheatly/
+		rm flgS
+		echo 0 > flgS
+	fi
+        #Couch
+        flg=$(cat spkC)
+        if [ "$flg" == "11" ] || [ "$flg" == "10" ]
+        then
+                cd /home/gui-bot/Desktop/Scripts/GUI/Wheatly/
+                flg1=$(cat flgC)
+                cd Audio
+                if [ "$flg1" == "1" ] && [ "$flg" == "11" ]
+                then
+                        espeak "couch is alredy on"
+                elif [ "$flg1" == "0" ] && [ "$flg" == "10" ]
+                then
+                        espeak "couch is alredy off"
+                else
+                        aplay 12.wav
+                fi
+                cd /home/gui-bot/Desktop/Scripts/GUI/Wheatly/
+                echo 0 > spkC
+        fi
+
+done
