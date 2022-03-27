@@ -1,0 +1,54 @@
+#!/bin/bash
+cd
+cd /home/gui-bot/Desktop/Scripts/GUI
+sleep 10
+tigervncserver :7 -localhost
+sleep 1
+tigervncserver :8 -localhost
+sleep 1
+tigervncserver :9 -localhost
+sleep 1
+tigervncserver :10 -localhost
+sleep 10
+display=$(echo $DISPLAY)
+echo $DISPLAY
+dsp=':8.0'
+dsp1=':9.0'
+dsp2=':10.0'
+
+if [ "$display" == "$dsp" ]
+then
+sleep 5
+flag=$(cat flag)
+#if [ $flag == 0  ]
+#then
+rm flag
+echo 1 > flag
+xterm -e ./Main
+#fi
+fi
+
+if [ "$display" == "$dsp1" ]
+then
+sleep 10
+flag=$(cat flag)
+#if [ $flag == 1  ]
+#then
+rm flag
+echo 2 > flag
+xterm -e ./Main1
+#fi
+fi
+
+if [ "$display" == "$dsp2" ]
+then
+sleep 10
+flag=$(cat flag)
+#if [ $flag == 2  ]
+#then
+rm flag
+echo 3 > flag
+xterm -e ./Main2
+#fi
+fi
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+#echo "Starting Wheatly stript"
+#sudo ./vhuit64 &
+#sleep 15
+rm main2_log
+echo "Connected"
+echo "Connected" >> main2_log
+amixer -D pulse sset Master 100%
+amixer -D pulse sset Capture 100%
+cd /home/gui-bot/Desktop/Scripts/Programs/
+./ngrok http --region=us --hostname=alexaapp.com.ngrok.io 5000 &
+cd
+cd /home/gui-bot/Desktop/Scripts/GUI/Wheatly
+./listener &
+python3 alexaskill.py

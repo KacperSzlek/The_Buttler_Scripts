@@ -1,0 +1,4 @@
+#/bin/bash
+cd /home/gui-bot/Desktop/Scripts/GUI
+rm clean_log
+./clean > clean_log &

@@ -1,0 +1,69 @@
+#!/bin/bash
+while :
+do
+sleep 60
+flag=0
+echo "check loop done"
+date
+
+y=$(vncserver --list | sed -n -e 5p)
+x=$(echo $y | tail -c 8)
+if [ "$x" == "(stale)" ]
+then
+echo "detected"
+flag=1
+fi
+
+y=$(vncserver --list | sed -n -e 6p)
+x=$(echo $y | tail -c 8)
+if [ "$x" == "(stale)" ]
+then
+echo "detected"
+flag=1
+fi
+
+y=$(vncserver --list | sed -n -e 7p)
+x=$(echo $y | tail -c 8)
+if [ "$x" == "(stale)" ]
+then
+echo "detected"
+flag=1
+fi
+
+y=$(vncserver --list | sed -n -e 8p)
+x=$(echo $y | tail -c 8)
+if [ "$x" == "(stale)" ]
+then
+echo "detected"
+flag=1
+fi
+
+if [ $flag == 1 ]
+then
+echo "started restart process"
+date
+pkill ip.py
+pkill Main
+pkill Main1
+pkill Main2
+pkill alexaskill.py
+pkill ngrok
+sleep 1
+tigervncserver -kill :7
+sleep 1
+tigervncserver -kill :8
+sleep 1
+tigervncserver -kill :9
+sleep 1
+tigervncserver -kill :10
+sleep 5
+tigervncserver :7 -localhost
+sleep 1
+tigervncserver :8 -localhost
+sleep 1
+tigervncserver :9 -localhost
+sleep 1
+tigervncserver :10 -localhost
+sleep 5
+fi
+done

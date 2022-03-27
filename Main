@@ -1,0 +1,66 @@
+#!/bin/bash
+sleep 30
+cd /home/gui-bot/Desktop/Scripts/GUI/
+rm main_log
+echo "started IP site script"
+echo "started IP site script" >> main_log
+ip=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}')
+i=0
+o=0
+
+while :
+do
+sleep 1
+xdotool click 1
+xdotool mousemove 1152 4
+ip1=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}')
+if [ $ip != $ip1 ]
+then
+	echo "IP changed" >> main_log
+	echo $ip1 >> main_log
+	echo "IP changed"
+	echo $ip1
+	date
+	date >> main_log
+	ip=$ip1
+	i=0
+	o=0
+	py=$(python3 ip.py $ip)
+	echo $py
+	echo $py >> main_log
+	if [ $py == "resolved" ]
+	then
+		echo "IP succesfully changed"
+		echo "IP succesfully changed" >> main_log
+	else
+		echo "Trying again"
+		echo "Trying again" >> main_log
+		while :
+		do
+			py=$(python3 ip.py $ip)
+			echo $py
+			echo $py >> main_log
+			if [ $py == "resolved" ]
+			then
+			echo "IP succesfully changed"
+			echo "IP succesfully changed" >> main_log
+			break
+			else
+			echo "Trying again"
+			echo "Trying again"
+			fi
+		done
+	fi
+else
+	i=$(( $i + 1 ))
+	if [ $i == 100 ]
+	then
+		i=0
+		o=$(( $o + 1 ))
+		echo "The same for $o hundred"
+		echo "The same for $o hundred" >> main_log
+		echo $ip1
+		echo $ip1 >> main_log
+	fi
+fi
+done
